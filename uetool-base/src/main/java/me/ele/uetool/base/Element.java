@@ -49,6 +49,7 @@ public class Element {
     public Element getParentElement() {
         if (parentElement == null) {
             Object parentView = view.getParent();
+            // 如果parentView 是viewGroup呢
             if (parentView instanceof View) {
                 parentElement = new Element((View) parentView);
             }

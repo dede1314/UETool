@@ -163,12 +163,20 @@ public class UETool {
     }
 
     private void initAttrsDialogMultiTypePool() {
+        // 右侧可以操作的类型
+        //加减
         attrsDialogMultiTypePool.register(AddMinusEditItem.class, new AddMinusEditTextItemBinder());
+        // 图片类型
         attrsDialogMultiTypePool.register(BitmapItem.class, new BitmapItemBinder());
+        //validview开关打开后的子view
         attrsDialogMultiTypePool.register(BriefDescItem.class, new BriefDescItemBinder());
+        // 可以编辑的
         attrsDialogMultiTypePool.register(EditTextItem.class, new EditTextItemBinder());
+        //开关
         attrsDialogMultiTypePool.register(SwitchItem.class, new SwitchItemBinder());
+        // 纯展示的
         attrsDialogMultiTypePool.register(TextItem.class, new TextItemBinder());
+        //分隔符，类别
         attrsDialogMultiTypePool.register(TitleItem.class, new TitleItemBinder());
     }
 

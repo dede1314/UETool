@@ -24,7 +24,7 @@ public class UETCore implements IAttrs {
         List<Item> items = new ArrayList<>();
 
         View view = element.getView();
-
+        //所有的属性
         items.add(new TextItem("Fragment", Util.getCurrentFragmentName(element.getView()), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +55,7 @@ public class UETCore implements IAttrs {
         items.add(new AddMinusEditItem("Width（dp）", element, EditTextItem.Type.TYPE_WIDTH, px2dip(view.getWidth())));
         items.add(new AddMinusEditItem("Height（dp）", element, EditTextItem.Type.TYPE_HEIGHT, px2dip(view.getHeight())));
         items.add(new TextItem("Alpha", String.valueOf(view.getAlpha())));
-        Object background = Util.getBackground(view);
+        Object background = Util.getBackground(view); // TODO: davidzhou 2022/8/22  有点复杂
         if (background instanceof String) {
             items.add(new TextItem("Background", (String) background));
         } else if (background instanceof Bitmap) {

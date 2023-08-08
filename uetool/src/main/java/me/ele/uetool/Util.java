@@ -97,6 +97,7 @@ public class Util {
 
     public static String getResId(View view) {
         try {
+            // TODO: davidzhou 2022/8/22   拿到到id 不会被混淆吗
             int id = view.getId();
             if (id == NO_ID) {
                 return "";

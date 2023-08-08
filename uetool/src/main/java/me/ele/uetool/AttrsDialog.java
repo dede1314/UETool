@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +106,8 @@ public class AttrsDialog extends Dialog {
         void selectView(Element element);
     }
 
+
+    //弹窗对应的adapter
     public static class Adapter extends RecyclerView.Adapter {
 
         private List<Item> items = new ItemArrayList<>();
@@ -122,6 +125,7 @@ public class AttrsDialog extends Dialog {
         public void notifyDataSetChanged(Element element) {
             items.clear();
             for (String attrsProvider : UETool.getInstance().getAttrsProvider()) {
+                Log.i("davidzhou", " notifyDataSetChanged: attrsProvider :"+attrsProvider);
                 try {
                     IAttrs attrs = (IAttrs) Class.forName(attrsProvider).newInstance();
                     items.addAll(attrs.getAttrs(element));
@@ -265,6 +269,7 @@ public class AttrsDialog extends Dialog {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     try {
+                        //可以编辑的属性，编辑完立即生效
                         if (item.getType() == EditTextItem.Type.TYPE_TEXT) {
                             TextView textView = ((TextView) (item.getElement().getView()));
                             if (!TextUtils.equals(textView.getText().toString(), s.toString())) {
@@ -361,6 +366,7 @@ public class AttrsDialog extends Dialog {
             }
         }
 
+        //可以加减来编辑的属性
         public static class AddMinusEditViewHolder extends EditTextViewHolder<AddMinusEditItem> {
 
             private View vAdd;
@@ -406,6 +412,7 @@ public class AttrsDialog extends Dialog {
             }
         }
 
+        // 可以开关的属性
         public static class SwitchViewHolder extends BaseViewHolder<SwitchItem> {
 
             private TextView vName;
@@ -497,6 +504,7 @@ public class AttrsDialog extends Dialog {
             }
         }
 
+        //  validView 展开之后的属性
         public static class BriefDescViewHolder extends BaseViewHolder<BriefDescItem> {
 
             private TextView vDesc;

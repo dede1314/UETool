@@ -17,6 +17,7 @@ public class ReflectionP {
         T result;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             try {
+                // TODO 这个反射库有点东西
                 Reflection.unseal(Application.getApplicationContext());
             } catch (Exception e) {
                 e.printStackTrace();

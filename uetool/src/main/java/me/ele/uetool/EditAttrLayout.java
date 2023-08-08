@@ -156,6 +156,7 @@ public class EditAttrLayout extends CollectViewsLayout {
 
         @Override
         public void triggerActionUp(final MotionEvent event) {
+            // 根据点击位置获取当前点击所在的view
             final Element element = getTargetElement(event.getX(), event.getY());
             if (element != null) {
                 targetElement = element;
@@ -163,12 +164,14 @@ public class EditAttrLayout extends CollectViewsLayout {
                 if (dialog == null) {
                     dialog = new AttrsDialog(getContext());
                     dialog.setAttrDialogCallback(new AttrsDialog.AttrDialogCallback() {
+                        //选中view 弹出的菜单中的move 开关
                         @Override
                         public void enableMove() {
                             mode = new MoveMode();
                             dismissAttrsDialog();
                         }
 
+                        //选中view 弹出的菜单中的ValidViews 开关
                         @Override
                         public void showValidViews(int position, boolean isChecked) {
                             int positionStart = position + 1;
@@ -179,6 +182,8 @@ public class EditAttrLayout extends CollectViewsLayout {
                             }
                         }
 
+
+                        //选中view 弹出的菜单中的ValidViews 开关打开后的子view
                         @Override
                         public void selectView(Element element) {
                             targetElement = element;

@@ -178,6 +178,7 @@ public class CollectViewsLayout extends View {
 
     }
 
+    // 遍历view,获取所有的子view
     private void traverse(View view, List<Element> elements) {
         if (UETool.getInstance().getFilterClasses().contains(view.getClass().getName())) return;
         if (view.getAlpha() == 0 || view.getVisibility() != View.VISIBLE) return;
@@ -191,6 +192,7 @@ public class CollectViewsLayout extends View {
         }
     }
 
+    //获取targetActivity的decorView，并核对
     private View getTargetDecorView(Activity targetActivity, View decorView) {
         if (decorView.getWidth() == 0 || decorView.getHeight() == 0) {
             return null;
