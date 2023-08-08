@@ -28,6 +28,7 @@ public class UETSubMenu extends LinearLayout {
     public UETSubMenu(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         inflate(context, R.layout.uet_sub_menu_layout, this);
+        // 统一处理子控件的布局，避免在父控件额外处理。
         setGravity(Gravity.CENTER);
         setOrientation(VERTICAL);
         setPadding(padding, 0, padding, 0);
@@ -36,12 +37,15 @@ public class UETSubMenu extends LinearLayout {
         vTitle = findViewById(R.id.title);
     }
 
+    //绑定数据和视图
     public void update(SubMenu subMenu) {
         vImage.setImageResource(subMenu.getImageRes());
         vTitle.setText(subMenu.getTitle());
         setOnClickListener(subMenu.getOnClickListener());
     }
 
+
+    // 数据和视图分开，而不是耦合在一个类。
     public static class SubMenu {
         private String title;
         private int imageRes;

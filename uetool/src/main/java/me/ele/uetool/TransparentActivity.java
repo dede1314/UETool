@@ -104,6 +104,8 @@ public class TransparentActivity extends AppCompatActivity {
         }
     }
 
+
+    // 如果只有固定几种参数，使用枚举？
     @IntDef({
             TYPE_UNKNOWN,
             TYPE_EDIT_ATTR,

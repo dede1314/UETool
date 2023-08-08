@@ -67,6 +67,9 @@ public class RelativePositionLayout extends CollectViewsLayout {
             return;
         }
 
+        // TODO: davidzhou 2022/8/18  获取点击的view
+        // TODO: davidzhou 2022/8/18 画红色边框
+        // TODO: davidzhou 2022/8/18 获得间距
         boolean doubleNotNull = true;
         for (Element element : relativeElements) {
             if (element != null) {
@@ -81,6 +84,7 @@ public class RelativePositionLayout extends CollectViewsLayout {
             }
         }
 
+        // TODO: davidzhou 2022/8/18 如何获得间距 ，以及同层级的其他view的间距
         if (doubleNotNull) {
             Rect firstRect = relativeElements[searchCount % elementsNum].getRect();
             Rect secondRect = relativeElements[(searchCount - 1) % elementsNum].getRect();

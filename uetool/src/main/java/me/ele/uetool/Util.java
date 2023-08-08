@@ -242,6 +242,8 @@ public class Util {
         Toast.makeText(context, "copied", Toast.LENGTH_SHORT).show();
     }
 
+
+    // 获取当前的activity.
     public static Activity getCurrentActivity() {
         try {
             Class activityThreadClass = Class.forName("android.app.ActivityThread");

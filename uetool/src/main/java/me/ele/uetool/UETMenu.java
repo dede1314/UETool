@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.util.Log;
 import android.view.*;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -42,6 +43,7 @@ public class UETMenu extends LinearLayout {
         setGravity(Gravity.CENTER_VERTICAL);
 
         this.y = y;
+        // onTouch 中判断是滑动还是点击
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -68,6 +70,8 @@ public class UETMenu extends LinearLayout {
                         open(TransparentActivity.Type.TYPE_SHOW_GRIDDING);
                     }
                 }));
+
+        // // TODO: davidzhou 2022/8/18  手术刀，获取整个布局，然后展示层级，跟随手指拖动，酷炫
 
         subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.uet_scalpel), R.drawable.uet_scalpel, new OnClickListener() {
             @Override
@@ -118,15 +122,18 @@ public class UETMenu extends LinearLayout {
                         downY = event.getRawY();
                         lastY = downY;
                         break;
+
                     case MotionEvent.ACTION_MOVE:
                         params.y += event.getRawY() - lastY;
                         params.y = Math.max(0, params.y);
+                        // 跟随手指滑动
                         windowManager.updateViewLayout(UETMenu.this, params);
                         lastY = event.getRawY();
                         break;
                     case MotionEvent.ACTION_UP:
                         if (Math.abs(event.getRawX() - downX) < touchSlop && Math.abs(event.getRawY() - downY) < touchSlop) {
                             try {
+                                // 厉害了
                                 Field field = View.class.getDeclaredField("mListenerInfo");
                                 field.setAccessible(true);
                                 Object object = field.get(vMenu);
@@ -134,6 +141,9 @@ public class UETMenu extends LinearLayout {
                                 field.setAccessible(true);
                                 object = field.get(object);
                                 if (object != null && object instanceof View.OnClickListener) {
+                                    // 避免使用performClick
+                                    // 先拿到mListenerInfo，然后在拿mOnClickListener，最后执行onClick。 高
+
                                     ((View.OnClickListener) object).onClick(vMenu);
                                 }
                             } catch (Exception e) {
@@ -147,8 +157,12 @@ public class UETMenu extends LinearLayout {
         });
     }
 
+
+    // TODO: davidzhou 2022/8/18   如何展开收起？动画，
+    // TODO: davidzhou 2022/8/18  怎么实现的一个动画， 有展开收起两种效果
     private void startAnim() {
         ensureAnim();
+        // 判断是否展开
         final boolean isOpen = vSubMenuContainer.getTranslationX() <= -vSubMenuContainer.getWidth();
         animator.setInterpolator(isOpen ? defaultInterpolator : new ReverseInterpolator(defaultInterpolator));
         animator.removeAllListeners();
@@ -169,11 +183,21 @@ public class UETMenu extends LinearLayout {
     }
 
     private void ensureAnim() {
+
         if (animator == null) {
+            // 坐标的基准位置？
+            // TODO: davidzhou 2022/8/18  基础知识
             animator = ValueAnimator.ofInt(-vSubMenuContainer.getWidth(), 0);
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
+                    //setTranslationX改变了view的位置
+                    // 通过此方法使View位置发生偏移，达到margin的作用却又不改变View的getLeft()的值。
+                    //恢复方法是setTranslationX(0)，而不是上一次偏移量的相反数。
+                    //不过，通过getLocationInWindow(), getLocationOnScreen()获取到的位置是发生变化的，因此才能看到View的移动
+
+                    Log.i("davidzhou", " onAnimationUpdate: :"+(int) animation.getAnimatedValue());
+
                     vSubMenuContainer.setTranslationX((int) animation.getAnimatedValue());
                 }
             });
@@ -193,10 +217,12 @@ public class UETMenu extends LinearLayout {
             currentTopActivity.finish();
             return;
         }
+        // 启动一个透明的activity.基本无感知，这个是activity.
         Intent intent = new Intent(currentTopActivity, TransparentActivity.class);
         intent.putExtra(TransparentActivity.EXTRA_TYPE, type);
         currentTopActivity.startActivity(intent);
         currentTopActivity.overridePendingTransition(0, 0);
+        //用来分析界面的actvity,实际上在透明activity下面一层。
         UETool.getInstance().setTargetActivity(currentTopActivity);
     }
 
