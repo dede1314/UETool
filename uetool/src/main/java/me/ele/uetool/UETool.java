@@ -51,6 +51,8 @@ public class UETool {
         initAttrsDialogMultiTypePool();
     }
 
+
+    // 使用单例来管理这个一个view. 没有传入context.
     static UETool getInstance() {
         if (instance == null) {
             synchronized (UETool.class) {
@@ -79,6 +81,7 @@ public class UETool {
     }
 
     public static void putAttrsProviderClass(String className) {
+        //添加自定义属性
         getInstance().putAttrsProviderClassName(className);
     }
 
@@ -108,6 +111,7 @@ public class UETool {
 
     private boolean showMenu(int y) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // 悬浮窗权限申请
             if (!Settings.canDrawOverlays(Application.getApplicationContext())) {
                 requestPermission(Application.getApplicationContext());
                 Toast.makeText(Application.getApplicationContext(), "After grant this permission, re-enable UETool", Toast.LENGTH_LONG).show();

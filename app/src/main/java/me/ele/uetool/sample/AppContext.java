@@ -20,6 +20,8 @@ public class AppContext extends Application {
         UETool.putFilterClass(FilterOutView.class);
         UETool.putAttrsProviderClass(CustomAttribution.class);
 
+        // 利用生命周期来管理跨activity的事件。
+
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 
             private int visibleActivityCount;
@@ -34,6 +36,9 @@ public class AppContext extends Application {
             public void onActivityStarted(Activity activity) {
                 visibleActivityCount++;
                 if (visibleActivityCount == 1 && uetoolDismissY >= 0) {
+                    // window 归属于activity,因为每个actvity 都需要重新添加一次。
+                    // UETool是单例，避免创建多次。
+                    // 使用另外的计数来判断，
                     UETool.showUETMenu(uetoolDismissY);
                 }
             }

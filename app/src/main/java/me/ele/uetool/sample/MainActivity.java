@@ -27,12 +27,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 开关控件  ,android.support.v7.widget
         final SwitchCompat control = findViewById(R.id.control);
         control.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (!UETool.showUETMenu()) {
+                    if (!UETool.showUETMenu()) {// 显示成功才更改开关状态
                         control.setChecked(false);
                     }
                 } else {
@@ -40,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        // 使用到了isLaidOut 方法,只有当 View 至少经历过一次 layout 时，isLaidOut() 方法才能返回 true，继而才能获取到 View 的真实宽高。
+
         control.setChecked(true);
+
 
         updateDraweeView();
         updateSpanTextView();

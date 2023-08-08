@@ -28,6 +28,7 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar"/>
 
+        <!--activity-alias可用来设置某个Activity的快捷入口，可以放在桌面上或者通过该别名被其他组件快速调起-->
         <activity-alias
                 android:name=".SecondActivityAlias"
                 android:label="Alias快捷入口"
