@@ -18,6 +18,7 @@ public class ReflectionP {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             try {
                 // TODO 这个反射库有点东西
+                // https://weishu.me/2019/03/16/another-free-reflection-above-android-p/
                 Reflection.unseal(Application.getApplicationContext());
             } catch (Exception e) {
                 e.printStackTrace();

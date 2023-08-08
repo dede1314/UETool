@@ -63,7 +63,7 @@ public class FragmentListTreeDialog extends Dialog implements Provider {
 
         containerView.removeAllViews();
 
-        AndroidTreeView tView = new AndroidTreeView(getContext(), root);
+        AndroidTreeView tView = new AndroidTreeView(getContext(), root);  //  树形view
         tView.setDefaultAnimation(true);
         tView.setUse2dScroll(true);
         tView.setDefaultContainerStyle(R.style.uet_TreeNodeStyleCustom);

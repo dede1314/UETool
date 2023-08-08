@@ -145,6 +145,7 @@ public class EditAttrLayout extends CollectViewsLayout {
         @Override
         public void onDraw(Canvas canvas) {
             Rect rect = targetElement.getRect();
+            //绘制长宽对应的线及具体的数值
             drawLineWithText(canvas, rect.left, rect.top - lineBorderDistance, rect.right, rect.top - lineBorderDistance);
             drawLineWithText(canvas, rect.right + lineBorderDistance, rect.top, rect.right + lineBorderDistance, rect.bottom);
         }

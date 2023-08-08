@@ -98,6 +98,7 @@ public class CollectViewsLayout extends View {
                         }
                     }
                 } else {
+                    // 绕开hidden Api的限制,获取所有的view
                     ReflectionP.breakAndroidP(new Func<Void>() {
                         @Override
                         public Void call() {
@@ -216,6 +217,7 @@ public class CollectViewsLayout extends View {
 
     protected Element getTargetElement(float x, float y) {
         Element target = null;
+        // 因为面积排序是从大到下，因此查找点击的view时从小到打开始查找
         for (int i = elements.size() - 1; i >= 0; i--) {
             final Element element = elements.get(i);
             if (element.getRect().contains((int) x, (int) y)) {

@@ -39,6 +39,7 @@ public class UETCore implements IAttrs {
         items.add(new SwitchItem("Move", element, SwitchItem.Type.TYPE_MOVE));
         items.add(new SwitchItem("ValidViews", element, SwitchItem.Type.TYPE_SHOW_VALID_VIEWS));
 
+        //不同的组件 不同的attrs
         IAttrs iAttrs = AttrsManager.createAttrs(view);
         if (iAttrs != null) {
             items.addAll(iAttrs.getAttrs(element));

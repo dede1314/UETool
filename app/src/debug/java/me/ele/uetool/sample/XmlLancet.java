@@ -9,12 +9,13 @@ import me.ele.lancet.base.Origin;
 import me.ele.lancet.base.annotations.Proxy;
 import me.ele.lancet.base.annotations.TargetClass;
 
+//编译器AOP
 public class XmlLancet {
-
-    @Proxy("inflate")
-    @TargetClass(value = "android.view.LayoutInflater")
+   // @Proxy   将使用新的方法替换代码里存在的原有的目标方法.
+    @Proxy("inflate")  // @Proxy 指定了将要被织入代码目标方法 inflate.
+    @TargetClass(value = "android.view.LayoutInflater")  //@TargetClass 指定了将要被织入代码目标类
     public View inflate(int resourceId, ViewGroup root) {
-        View view = (View) Origin.call();
+        View view = (View) Origin.call();  // Origin.call() 代表了 LayoutInflater.inflate() 这个目标方法.
         traverse(view, getResourceName(view, resourceId));
         return view;
     }
